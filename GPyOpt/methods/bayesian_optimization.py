@@ -77,7 +77,6 @@ class BayesianOptimization(BO):
     	initial_design_numdata = 5, initial_design_type='random', acquisition_type ='EI', normalize_Y = True,
         exact_feval = False, acquisition_optimizer_type = 'lbfgs', model_update_interval=1, evaluator_type = 'sequential',
         batch_size = 1, num_cores = 1, verbosity=False, verbosity_model = False, maximize=False, de_duplication=False, **kwargs):
-        print('My GPyOpt repo.')
         self.modular_optimization = False
         self.initial_iter = True
         self.verbosity = verbosity
@@ -137,8 +136,9 @@ class BayesianOptimization(BO):
         # --- CHOOSE the acquisition optimizer_type
 
         # This states how the discrete variables are handled (exact search or rounding)
+        kwargs.update({ 'model' : self.model })
         self.acquisition_optimizer_type = acquisition_optimizer_type
-        self.acquisition_optimizer = AcquisitionOptimizer(self.space, self.acquisition_optimizer_type, model=self.model)  ## more arguments may come here
+        self.acquisition_optimizer = AcquisitionOptimizer(self.space, self.acquisition_optimizer_type, **kwargs)  ## more arguments may come here
 
         # --- CHOOSE acquisition function. If an instance of an acquisition is passed (possibly user defined), it is used.
         self.acquisition_type = acquisition_type
