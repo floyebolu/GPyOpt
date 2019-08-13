@@ -329,6 +329,7 @@ class BO(object):
             file.write('Problem name:                ' + self.objective_name +'\n')
             file.write('Problem dimension:           ' + str(self.space.dimensionality) +'\n')
             file.write('Number continuous variables  ' + str(len(self.space.get_continuous_dims()) ) +'\n')
+            file.write('Number categorical variables ' + str(len(self.space.get_categorical_dims()) ) +'\n')
             file.write('Number discrete variables    ' + str(len(self.space.get_discrete_dims())) +'\n')
             file.write('Number bandits               ' + str(self.space.get_bandit().shape[0]) +'\n')
             file.write('Noiseless evaluations:       ' + str(self.exact_feval) +'\n')

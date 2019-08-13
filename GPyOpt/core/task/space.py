@@ -429,6 +429,19 @@ class Design_space(object):
                 arms_bandit += tuple(map(tuple, d.domain))
         return np.asarray(arms_bandit)
 
+    ###
+    ### ---- Atributes for the categorical variables
+    ###
+
+    def get_categorical_dims(self):
+        """
+        Returns the dimension of the categorical components of the domain.
+        """
+        categorical_dims = []
+        for i in range(self.dimensionality):
+            if self.space_expanded[i].type == 'categorical':
+                categorical_dims += [i]
+        return categorical_dims
 
 
 ###
