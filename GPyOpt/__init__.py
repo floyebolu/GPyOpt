@@ -8,12 +8,18 @@ from GPyOpt.core.task.space import Design_space
 from . import core
 from . import methods
 from . import util
-from . import plotting
+try:
+	from . import plotting
+except (ImportError, ModuleNotFoundError):
+	warnings.warn("matplotlib not installed!")
 from . import interface
 from . import models
 from . import acquisitions
 from . import optimization
-from . import objective_examples
-from . import objective_examples as fmodels
+try:
+	from . import objective_examples
+	from . import objective_examples as fmodels
+except (ImportError, ModuleNotFoundError):
+	warnings.warn("matplotlib not installed!")
 
 from .__version__ import __version__
