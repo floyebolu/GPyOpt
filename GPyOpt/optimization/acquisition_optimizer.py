@@ -71,6 +71,13 @@ class AcquisitionOptimizer(object):
 
         ## --- Applying local optimizers at the anchor points and update bounds of the optimizer (according to the context)
         optimized_points = [apply_optimizer(self.optimizer, a, f=f, df=None, f_df=f_df, duplicate_manager=duplicate_manager, context_manager=self.context_manager, space = self.space) for a in anchor_points]
+        if self.space.has_constraints():
+            optimized_points = [point for point in optimized_points if
+                                np.all(self.space.indicator_constraints(self.space.zip_inputs(point[0]))) == True]
+            if len(optimized_points) == 0:
+                scores = anchor_points_generator.get_anchor_point_scores(anchor_points)
+                optimized_points = [(np.atleast_2d(point), np.atleast_2d(score)) for point, score in
+                                    zip(anchor_points, scores)]
         x_min, fx_min = min(optimized_points, key=lambda t:t[1])
 
         #x_min, fx_min = min([apply_optimizer(self.optimizer, a, f=f, df=None, f_df=f_df, duplicate_manager=duplicate_manager, context_manager=self.context_manager, space = self.space) for a in anchor_points], key=lambda t:t[1])
